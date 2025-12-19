@@ -16,7 +16,10 @@ app.get("/about",function(haha,hehe){
     hehe.send("ABOUT WORLD ") 
 })
 
-
+app.get("/fetch-users",function(req,res){
+    //respose ma user table ma vako user data sent garnu paryo
+    Users
+})
 
 
 

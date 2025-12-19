@@ -6,7 +6,7 @@ const userSchema=new schema({
     password:String
 })  //Class Object Creation  // email string name and password string are used to create the schema of user
 
-mongoose.model("User",userSchema)
+mongoose.model("Users",userSchema)
 //User is the name of the model and userSchema is the schema defined above
 
-
+module.exports=Users
