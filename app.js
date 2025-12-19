@@ -1,5 +1,6 @@
 const express=require("express") 
 const dbsangaConnectHu=require("./Database/connection")
+const User = require("./models/userModel")
 const app=express()
 
 dbsangaConnectHu()
@@ -16,9 +17,12 @@ app.get("/about",function(haha,hehe){
     hehe.send("ABOUT WORLD ") 
 })
 
-app.get("/fetch-users",function(req,res){
+app.get("/fetch",async function(req,res){
     //respose ma user table ma vako user data sent garnu paryo
-    Users
+    const data= await User.find()
+    res.json({
+        data,    //we can also 
+    })
 })
 
 
