@@ -5,11 +5,15 @@ app.get("/",function(haha,hehe){
     hehe.send("Hello World") 
     // anything can be named in place of request and response but sequence should be kept in mind 
 })
-
+app.get("/hello", function (req, res) {
+    res.json({
+        name: "homepage"
+    });
+});
 app.get("/about",function(haha,hehe){
-    hehe.send("About World ..World is Huge ") 
-    // anything can be named in place of request and response but sequence should be kept in mind 
+    hehe.send("ABOUT WORLD ") 
 })
+
 
 
 
