@@ -2,6 +2,7 @@ const express=require("express")
 const dbsangaConnectHu=require("./Database/connection")
 const User = require("./models/userModel")
 const app=express()
+const bcrypt=require("bcrypt")
 
 dbsangaConnectHu()
 app.use(express.json()) //
@@ -17,7 +18,13 @@ app.get("/hello", function (req, res) {
 app.get("/about",function(haha,hehe){
     hehe.send("ABOUT WORLD ") 
 })
-
+app.delete("/delete/:id",async function(req,res){
+    const id=req.params.id
+    await User.findByIdAndDelete(id)
+    res.json({
+        message:"User with that id deleted successfully!!"
+    })
+})
 app.post("/register",async function(req,res){
    const name = req.body.name
    const email= req.body.email
@@ -27,21 +34,27 @@ app.post("/register",async function(req,res){
 await User.create({
     name:name,
     email:email,
-    password:password
+    password:bcrypt.hashSync(password,25)
 })
 res.json({
     message:"User registered successfully"
 })
 }) 
-app.get("/fetch",async function(req,res){
+app.get("/fetch-users",async function(req,res){
     //respose ma user table ma vako user data sent garnu paryo
     const data= await User.find()
     res.json({
-        data,    //we can also 
+        data,   
     })
 })
 
-
+app.delete("/delete",async function(req,res){
+    const id=req.body.id
+    await User.findByIdAndDelete(id)
+    res.json({
+        message:"User with specific id deleted successfully!!"
+    })
+})
 
 app.listen(3000,function(){
     console.log("Server has started at port 3000")  
