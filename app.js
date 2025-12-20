@@ -1,6 +1,7 @@
 const express=require("express") 
 const dbsangaConnectHu=require("./Database/connection")
 const User = require("./models/userModel")
+const Blog = require("./models/blogModel");
 const app=express()
 const bcrypt=require("bcrypt")
 
@@ -55,6 +56,40 @@ app.delete("/delete",async function(req,res){
         message:"User with specific id deleted successfully!!"
     })
 })
+
+app.post("/create-blog", async function (req, res) {
+    const title = req.body.title;
+    const subtitle = req.body.subtitle;
+    const description = req.body.description;
+
+    await Blog.create({
+        title: title,
+        subtitle: subtitle,
+        description: description
+    });
+
+    res.json({
+        message: "Blog created successfully"
+    });
+});
+
+app.delete("/delete-blog/:id", async function (req, res) {
+    const id = req.params.id;
+
+    await Blog.findByIdAndDelete(id);
+
+    res.json({
+        message: "Blog deleted successfully"
+    });
+});
+
+app.get("/fetch-blogs", async function (req, res) {
+    const blogs = await Blog.find();
+
+    res.json({
+        blogs
+    });
+});
 
 app.listen(3000,function(){
     console.log("Server has started at port 3000")  
